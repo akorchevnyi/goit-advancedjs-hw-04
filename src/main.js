@@ -19,34 +19,31 @@ function handleFormInput(e) {
 }
 
 
-function handleSearch(e) {
+async function handleSearch(e) {
   e.preventDefault();
   if (!query) return;
 
   refs.gallery.innerHTML = '';
   refs.loader.style.display = 'block';
 
-  getPhotos(query)
-    .then(({ hits }) => {
-      refs.loader.style.display = 'none';
-      if (hits.length) {
-        refs.gallery.innerHTML = renderGallery(hits);
-        simpleLightBox.refresh();
-      }
-      else {
-        iziToast.warning({ message: 'Sorry, there are no images matching your search query. Please try again!', position: 'topRight' });
-      }
+  const photos = await getPhotos(query);
 
-    })
-    .catch((error) => {
-      iziToast.error({ message: 'There was an error while loading pictures. Please try again!', position: 'topRight' });
-      console.error(error);
-    })
-    .finally(() => {
-      query = '';
-      localStorage.removeItem(STORAGE_KEY);
-      refs.form.reset();
-    });
+  if (!photos) {
+    iziToast.error({ message: 'Sorry, there was an error while getting photos. Please try again!', position: 'topRight' });
+    return
+  }
+  else if (photos.length === 0) {
+    iziToast.warning({ message: 'Sorry, there are no images matching your search query. Please try again!', position: 'topRight' });
+  }
+  else {
+    refs.loader.style.display = 'none';
+    refs.gallery.innerHTML = renderGallery(photos);
+    simpleLightBox.refresh();
+  }
+
+  query = '';
+  localStorage.removeItem(STORAGE_KEY);
+  refs.form.reset();
 }
 
 
