@@ -1,10 +1,11 @@
-export function renderGallery(cards) {
-  return cards
+export function renderGallery(photos) {
+
+  return photos
     .map(({ webformatURL, tags, likes, views, comments, downloads, largeImageURL }) =>
-        `
+      `
             <li class="gallery-card">
                 <a class="gallery-link" href="${largeImageURL}">
-                    <img class="gallery-image" src="${webformatURL}" alt="${tags}" height=312 width=200>
+                    <img class="gallery-image" src="${webformatURL}" alt="${tags}" height="312" width="200" loading="lazy">
                     <ul class="statistics">
                         <li class="stat-element">
                             <p class="stat-name">Likes</p>
@@ -28,7 +29,7 @@ export function renderGallery(cards) {
                     </ul>
                 </a>
             </li>
-      `
+      `,
     )
-    .join("");
+    .join('');
 }

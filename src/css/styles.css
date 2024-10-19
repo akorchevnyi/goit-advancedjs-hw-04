@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -90,6 +91,14 @@ button {
   transition: background-color 300ms ease-in-out;
 }
 
+.load-btn {
+  display: none;
+}
+
+.end-warning {
+  display: none;
+}
+
 button:hover {
   background-color: #6C8CFF
 }
@@ -107,6 +116,7 @@ button:hover {
 
 .gallery {
   margin-top: 32px;
+  margin-bottom: 32px;
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
